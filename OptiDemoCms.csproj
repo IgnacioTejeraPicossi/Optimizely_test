@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OptiDemoCms.Tests\**" />
+    <Content Remove="OptiDemoCms.Tests\**" />
+    <EmbeddedResource Remove="OptiDemoCms.Tests\**" />
+    <None Remove="OptiDemoCms.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="EPiServer"/>
     <Using Include="EPiServer.Core"/>
     <Using Include="EPiServer.DataAbstraction"/>

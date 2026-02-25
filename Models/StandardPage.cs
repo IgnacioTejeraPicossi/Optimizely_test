@@ -1,5 +1,6 @@
 using EPiServer.Core;
 using EPiServer.DataAnnotations;
+using OptiDemoCms.Models.Blocks;
 using System.ComponentModel.DataAnnotations;
 
 namespace OptiDemoCms.Models
@@ -15,6 +16,7 @@ namespace OptiDemoCms.Models
             Description = "Page heading",
             GroupName = SystemTabNames.Content,
             Order = 10)]
+        [Required(ErrorMessage = "Heading is required")]
         public virtual string? Heading { get; set; }
 
         [Display(
@@ -26,9 +28,10 @@ namespace OptiDemoCms.Models
 
         [Display(
             Name = "Main content area",
-            Description = "Content area for blocks",
+            Description = "Content area for blocks (Hero, Rich Text, CTA)",
             GroupName = SystemTabNames.Content,
             Order = 30)]
+        [AllowedTypes(typeof(HeroBlock), typeof(RichTextBlock), typeof(CTABlock))]
         public virtual ContentArea? MainContentArea { get; set; }
     }
 }
