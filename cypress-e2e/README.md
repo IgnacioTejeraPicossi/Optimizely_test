@@ -2,6 +2,24 @@
 
 UI (browser) tests using [Cypress](https://www.cypress.io/). The app must be running (e.g. `dotnet run` from the project root) before running tests.
 
+## Example: Optimizely home page and Cypress tests passing
+
+The screenshots below show the Optimizely Demo CMS home page (“Hello Optimizely”, with a reusable block “Welcome Ignacio”) and the Cypress test runner with all tests passing.
+
+**Home page (StartPage) in the browser**
+
+![Optimizely home page – Hello Optimizely, Welcome Ignacio, first reusable block](docs/screenshots/optimizely-home-page.png)
+
+**Cypress: Home page (StartPage) tests – 7 passing**
+
+![Cypress test runner – home.cy.js, 7 tests passing](docs/screenshots/cypress-home-tests.png)
+
+**Cypress: Search page tests – 5 passing**
+
+![Cypress test runner – search.cy.js, 5 tests passing](docs/screenshots/cypress-search-tests.png)
+
+---
+
 ## Prerequisites
 
 - Node.js 18+ (LTS)
