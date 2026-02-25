@@ -2,14 +2,19 @@
 
 Demo site on **Optimizely CMS 12 / .NET 8** for learning and testing (unit, integration, E2E).
 
-## Implemented (roadmap phases 0–3)
+## Implemented (roadmap phases 0–4)
 
-- **Pages:** `StartPage` (MainHeading, HeroArea, TopContentArea, MainContentArea), `StandardPage` (Heading, MainBody, MainContentArea).
-- **Blocks:** `HeroBlock` (Heading, Text, Image with UIHint), `RichTextBlock` (Heading, Body), `CTABlock` (Heading, Text, Link, ButtonLabel).
+- **Pages:** `StartPage`, `StandardPage`, `NotFoundPage` (404).
+- **Blocks:** `HeroBlock`, `RichTextBlock`, `CTABlock`.
 - **Layout:** `_Layout.cshtml` with header/nav/footer, `_ViewStart.cshtml`, `wwwroot/css/site.css`.
-- **Navigation:** Menu from children of StartPage; `data-testid` on key elements for UI/integration tests.
-- **Phase 3 (editorial UX):** Custom tab "Header" on StartPage; `[Required]` on MainHeading (StartPage) and Heading (StandardPage); `[AllowedTypes]` on ContentAreas — HeroArea allows only `HeroBlock`, TopContentArea/MainContentArea allow Hero, RichText, CTA blocks.
-- **Integration tests:** `OptiDemoCms.Tests` with `WebApplicationFactory` — tests for `/` (200, HTML, start-page/main-heading/site-header/footer/nav and "Optimizely CMS is running"). Run with `dotnet test OptiDemoCms.Tests/OptiDemoCms.Tests.csproj` (stop any running `dotnet run` first).
+- **Navigation:** Menu from children of StartPage; Search link in nav; `data-testid` on key elements.
+- **Phase 3 (editorial UX):** Custom tab "Header" on StartPage; `[Required]` on MainHeading/Heading; `[AllowedTypes]` on ContentAreas.
+- **Phase 4:**  
+  - **SEO:** MetaTitle, MetaDescription, CanonicalUrl on StartPage and StandardPage; tab "SEO"; rendered in `<head>`.  
+  - **404:** `NotFoundPage` content type; `StatusCodeController` at `/statuscode/{code}`; `UseStatusCodePagesWithReExecute`; fallback view `StatusCode/404.cshtml`; optional CMS page named "404" under StartPage.  
+  - **Search:** `/search` with query `q`; simple search by page title (descendants of StartPage); `SearchController` + view with form and results.  
+  - **Localization:** `[CultureSpecific]` on MainHeading, Heading, MetaTitle, MetaDescription, and on NotFoundPage Heading/Message. Enable languages in CMS Admin (Manage websites → Languages).
+- **Integration tests:** `OptiDemoCms.Tests` with `WebApplicationFactory`. Run: `dotnet test OptiDemoCms.Tests/OptiDemoCms.Tests.csproj` (stop any running `dotnet run` first).
 
 ## How to run
 

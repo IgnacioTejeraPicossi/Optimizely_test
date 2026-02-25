@@ -127,3 +127,42 @@ body {
 .cta-button:hover {
     opacity: 0.9;
 }
+
+/* 404 / Not found */
+.not-found-page {
+    padding: 2rem;
+    text-align: center;
+}
+
+.not-found-page h1 {
+    color: var(--color-primary);
+}
+
+/* Search */
+.search-page .search-form {
+    margin-bottom: 1.5rem;
+}
+
+.search-page .search-form input[type="search"] {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    min-width: 200px;
+}
+
+.search-page .search-form button {
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-results {
+    list-style: none;
+    padding: 0;
+}
+
+.search-results li {
+    margin-bottom: 0.5rem;
+}

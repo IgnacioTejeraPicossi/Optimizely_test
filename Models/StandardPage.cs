@@ -17,6 +17,7 @@ namespace OptiDemoCms.Models
             GroupName = SystemTabNames.Content,
             Order = 10)]
         [Required(ErrorMessage = "Heading is required")]
+        [CultureSpecific]
         public virtual string? Heading { get; set; }
 
         [Display(
@@ -33,5 +34,28 @@ namespace OptiDemoCms.Models
             Order = 30)]
         [AllowedTypes(typeof(HeroBlock), typeof(RichTextBlock), typeof(CTABlock))]
         public virtual ContentArea? MainContentArea { get; set; }
+
+        [Display(
+            Name = "Meta title",
+            Description = "SEO title (defaults to heading if empty)",
+            GroupName = "SEO",
+            Order = 40)]
+        [CultureSpecific]
+        public virtual string? MetaTitle { get; set; }
+
+        [Display(
+            Name = "Meta description",
+            Description = "SEO meta description",
+            GroupName = "SEO",
+            Order = 50)]
+        [CultureSpecific]
+        public virtual string? MetaDescription { get; set; }
+
+        [Display(
+            Name = "Canonical URL",
+            Description = "Optional canonical URL for SEO",
+            GroupName = "SEO",
+            Order = 60)]
+        public virtual string? CanonicalUrl { get; set; }
     }
 }

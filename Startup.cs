@@ -40,6 +40,7 @@ public class Startup
 
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseStatusCodePagesWithReExecute("/statuscode/{0}");
         app.UseAuthentication();
         app.UseAuthorization();
 

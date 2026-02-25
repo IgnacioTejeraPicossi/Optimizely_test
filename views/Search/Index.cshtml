@@ -1,0 +1,36 @@
+@model OptiDemoCms.Controllers.SearchResultViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = string.IsNullOrWhiteSpace(Model.Query) ? "Search" : $"Search: {Model.Query}";
+}
+
+<div class="search-page" data-testid="search-page">
+    <h1 data-testid="search-heading">Search</h1>
+
+    <form method="get" action="@Url.Action("Index", "Search")" class="search-form" data-testid="search-form">
+        <label for="q">Search by page title</label>
+        <input type="search" name="q" id="q" value="@Model.Query" placeholder="Enter search term..." data-testid="search-input" />
+        <button type="submit" data-testid="search-submit">Search</button>
+    </form>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <h2 data-testid="search-results-heading">Results</h2>
+        @if (Model.Results.Count == 0)
+        {
+            <p data-testid="search-no-results">No pages found for "@Model.Query".</p>
+        }
+        else
+        {
+            <ul class="search-results" data-testid="search-results">
+                @foreach (var item in Model.Results)
+                {
+                    <li>
+                        <a href="@item.Url">@item.Title</a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+</div>

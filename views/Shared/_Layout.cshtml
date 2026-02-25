@@ -19,7 +19,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@((string)(ViewData["Title"] ?? "Optimizely Demo"))</title>
+    <title>@((string)(ViewData["MetaTitle"] ?? ViewData["Title"] ?? "Optimizely Demo"))</title>
+    @if (ViewData["MetaDescription"] is string metaDesc && !string.IsNullOrWhiteSpace(metaDesc))
+    {
+        <meta name="description" content="@metaDesc" />
+    }
+    @if (ViewData["CanonicalUrl"] is string canonical && !string.IsNullOrWhiteSpace(canonical))
+    {
+        <link rel="canonical" href="@canonical" />
+    }
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -38,6 +46,7 @@
                         <a href="@Url.ContentUrl(page.ContentLink)">@(page.Name)</a>
                     </li>
                 }
+                <li><a href="@Url.Action("Index", "Search")" data-testid="nav-search">Search</a></li>
             </ul>
         </nav>
     </header>

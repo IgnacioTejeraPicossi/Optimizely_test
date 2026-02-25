@@ -2,6 +2,9 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = Model.MainHeading ?? Model.Name;
+    ViewData["MetaTitle"] = !string.IsNullOrWhiteSpace(Model.MetaTitle) ? Model.MetaTitle : (Model.MainHeading ?? Model.Name);
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    ViewData["CanonicalUrl"] = Model.CanonicalUrl;
 }
 
 <div class="start-page" data-testid="start-page">

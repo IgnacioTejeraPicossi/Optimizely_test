@@ -1,0 +1,21 @@
+@model OptiDemoCms.Models.NotFoundPage
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.Heading ?? "Page not found";
+}
+
+<div class="not-found-page" data-testid="not-found-page">
+    <h1 data-testid="not-found-heading">@(Model.Heading ?? "Page not found")</h1>
+    @if (Model.Message != null && !Model.Message.IsEmpty)
+    {
+        <div class="not-found-message" data-testid="not-found-message">
+            @Html.PropertyFor(x => x.Message)
+        </div>
+    }
+    else
+    {
+        <p>The page you requested could not be found.</p>
+    }
+    <p><a href="/" data-testid="not-found-home-link">Return to home</a></p>
+</div>
