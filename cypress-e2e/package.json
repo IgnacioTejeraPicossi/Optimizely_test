@@ -1,0 +1,14 @@
+{
+  "name": "optidemocms-cypress-e2e",
+  "version": "1.0.0",
+  "description": "Cypress E2E tests for Optimizely Demo CMS",
+  "private": true,
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.0"
+  }
+}

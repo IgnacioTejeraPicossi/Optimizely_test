@@ -78,6 +78,14 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
   **Important:** stop any running `dotnet run` before running tests (the executable is locked).
 - The test project folder is excluded from the main project (`OptiDemoCms.csproj`) so its `.cs` files are not compiled into the web app.
 
+### Cypress E2E (UI tests)
+- **Project:** `cypress-e2e/` (Node.js; Cypress 13).
+- **Prerequisites:** Node.js 18+, app running at `https://localhost:5000`.
+- **Setup:** `cd cypress-e2e && npm install`
+- **Run:** `npm run cy:open` (interactive) or `npm run cy:run` (headless).
+- **Specs:** `home.cy.js` (StartPage), `search.cy.js`, `not-found.cy.js`, `health.cy.js`; use `data-testid` selectors.
+- See **`cypress-e2e/README.md`** for details.
+
 ### Ready for more tests
 - **data-testid** in views: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
 
@@ -102,6 +110,7 @@ Optimizely/
 ├── Docs/                 Reproducibility.md
 ├── wwwroot/css/          site.css
 ├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
+├── cypress-e2e/          Cypress E2E tests (home, search, not-found, health)
 ├── Program.cs, Startup.cs, OptiDemoCms.csproj
 └── README.md
 ```
