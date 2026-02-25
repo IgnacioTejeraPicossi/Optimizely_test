@@ -7,7 +7,7 @@ namespace OptiDemoCms.Models.Blocks
 {
     [ContentType(
         DisplayName = "CTA Block",
-        GUID = "5b0d3f74-9g1c-5e8d-b4c5-5f6g3c4d8e1f",
+        GUID = "5b0d3f74-9a1c-5e8d-b4c5-5f6a3c4d8e1f",
         Description = "Call to action block with heading, text and button")]
     public class CTABlock : BlockData
     {
