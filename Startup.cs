@@ -29,6 +29,9 @@ public class Startup
             .AddCms()
             .AddAdminUserRegistration()
             .AddEmbeddedLocalization<Startup>();
+
+        services.AddHealthChecks()
+            .AddCheck<Health.CmsReadinessHealthCheck>("cms_readiness", tags: new[] { "ready" });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +49,16 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = OptiDemoCms.Health.HealthResponseWriter.WriteAsync
+            });
+            endpoints.MapHealthChecks("/health/ready", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+            {
+                Predicate = check => check.Tags.Contains("ready"),
+                ResponseWriter = OptiDemoCms.Health.HealthResponseWriter.WriteAsync
+            });
 	    endpoints.MapControllers();
             endpoints.MapContent();
         });

@@ -21,6 +21,8 @@
   
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="12.29.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="8.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
   </ItemGroup>
   
   <ItemGroup>

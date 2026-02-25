@@ -1,78 +1,95 @@
 # Optimizely Demo CMS
 
-Sitio demo en **Optimizely CMS 12 / .NET 8** para aprender y practicar testing (unit, integration, E2E). Basado en un roadmap por fases (0–4) implementado hasta la fecha.
+Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing (unit, integration, E2E). Based on a phased roadmap (0–5) implemented to date.
 
 ---
 
-## Estado actual: fases 0–4 completadas
+## Current status: phases 0–5 completed
 
-### Fase 0 — Baseline
-- Estructura estándar: `Models/Pages`, `Models/Blocks` (carpeta `Blokcs`), `Controllers`, `Views/Pages`, `Views/Shared/Blocks`, `wwwroot`.
-- StartPage en `/` con MainHeading y HeroArea.
-- `launchSettings.json` y `appsettings.Development.json` configurados.
-- Proyecto compila y arranca sin warnings críticos.
+### Phase 0 — Baseline
+- Standard structure: `Models/Pages`, `Models/Blocks` (folder `Blokcs`), `Controllers`, `Views/Pages`, `Views/Shared/Blocks`, `wwwroot`.
+- StartPage at `/` with MainHeading and HeroArea.
+- `launchSettings.json` and `appsettings.Development.json` configured.
+- Project builds and runs without critical warnings.
 
-### Fase 1 — Modelo de contenido (Pages, Blocks)
+### Phase 1 — Content model (Pages, Blocks)
 - **Pages**
   - **StartPage:** MainHeading, HeroArea, TopContentArea, MainContentArea.
   - **StandardPage:** Heading, MainBody (XhtmlString), MainContentArea.
-  - **NotFoundPage:** Heading, Message (XhtmlString); usado para 404.
+  - **NotFoundPage:** Heading, Message (XhtmlString); used for 404.
 - **Blocks**
-  - **HeroBlock:** Heading, Text (XhtmlString), Image (ContentReference con UIHint "Image").
+  - **HeroBlock:** Heading, Text (XhtmlString), Image (ContentReference with UIHint "Image").
   - **RichTextBlock:** Heading, Body (XhtmlString).
   - **CTABlock:** Heading, Text, Link (LinkItemCollection), ButtonLabel.
-- **Controladores y vistas:** StartPageController, StandardPageController, NotFoundPageController; vistas en `Views/StartPage`, `Views/StandardPage`, `Views/NotFoundPage`. Bloques renderizados vía componentes (`HeroBlockComponent`, `RichTextBlockComponent`, `CTABlockComponent`) y vistas en `Views/Shared/Blocks`.
+- **Controllers and views:** StartPageController, StandardPageController, NotFoundPageController; views in `Views/StartPage`, `Views/StandardPage`, `Views/NotFoundPage`. Blocks rendered via components (`HeroBlockComponent`, `RichTextBlockComponent`, `CTABlockComponent`) and views in `Views/Shared/Blocks`.
 
-### Fase 2 — Layout y navegación
-- **Layout:** `Views/Shared/_Layout.cshtml` con header, nav, main, footer; `_ViewStart.cshtml` aplica el layout por defecto.
-- **Navegación:** menú con hijos de StartPage (IContentLoader, FilterContentForVisitor, VisibleInMenu); enlace a Search en el menú.
-- **Estilos:** `wwwroot/css/site.css` (variables CSS, header, nav, hero, CTA, footer, 404, search).
-- **SEO en head:** título desde ViewData; meta description y canonical cuando las vistas los rellenan.
+### Phase 2 — Layout and navigation
+- **Layout:** `Views/Shared/_Layout.cshtml` with header, nav, main, footer; `_ViewStart.cshtml` applies the default layout.
+- **Navigation:** menu from children of StartPage (IContentLoader, FilterContentForVisitor, VisibleInMenu); Search link in the menu.
+- **Styles:** `wwwroot/css/site.css` (CSS variables, header, nav, hero, CTA, footer, 404, search).
+- **SEO in head:** title from ViewData; meta description and canonical when views set them.
 
-### Fase 3 — Reglas editoriales y UX en CMS
-- **Tabs:** En StartPage, pestaña **"Header"** (MainHeading, HeroArea) y **"Content"** (TopContentArea, MainContentArea); pestaña **"SEO"** en StartPage y StandardPage.
-- **Validación:** `[Required]` en MainHeading (StartPage) y Heading (StandardPage).
-- **Restricciones en ContentArea:**
-  - **HeroArea:** solo `HeroBlock` (`[AllowedTypes(typeof(HeroBlock))]`).
-  - **TopContentArea y MainContentArea (StartPage), MainContentArea (StandardPage):** HeroBlock, RichTextBlock, CTABlock.
-- Display, Description y Order coherentes en los modelos.
+### Phase 3 — Editorial rules and CMS UX
+- **Tabs:** On StartPage, **"Header"** tab (MainHeading, HeroArea) and **"Content"** tab (TopContentArea, MainContentArea); **"SEO"** tab on StartPage and StandardPage.
+- **Validation:** `[Required]` on MainHeading (StartPage) and Heading (StandardPage).
+- **ContentArea restrictions:**
+  - **HeroArea:** only `HeroBlock` (`[AllowedTypes(typeof(HeroBlock))]`).
+  - **TopContentArea and MainContentArea (StartPage), MainContentArea (StandardPage):** HeroBlock, RichTextBlock, CTABlock.
+- Display, Description and Order consistent across models.
 
-### Fase 4 — SEO, 404, búsqueda, localización
+### Phase 4 — SEO, 404, search, localization
 - **SEO**
-  - StartPage y StandardPage: propiedades **MetaTitle**, **MetaDescription**, **CanonicalUrl** (pestaña SEO).
-  - Layout: `<title>`, `<meta name="description">`, `<link rel="canonical">` según ViewData (las vistas de página rellenan MetaTitle, MetaDescription, CanonicalUrl).
-- **404 y errores**
-  - Tipo de contenido **NotFoundPage** (Heading, Message).
-  - **StatusCodeController** en `/statuscode/{statusCode}`; para 404 intenta cargar una página CMS de tipo NotFoundPage llamada "404" bajo StartPage; si no existe, usa la vista estática `Views/StatusCode/404.cshtml`.
-  - `UseStatusCodePagesWithReExecute("/statuscode/{0}")` en Startup.
-- **Búsqueda**
-  - Ruta **/search**, parámetro **q**; búsqueda simple por título en todas las páginas descendientes de StartPage (recursivo con IContentLoader).
-  - SearchController + vista con formulario y lista de resultados; IUrlResolver para URLs.
-- **Localización**
-  - `[CultureSpecific]` en: MainHeading, Heading, MetaTitle, MetaDescription (StartPage y StandardPage); Heading y Message (NotFoundPage).
-  - Idiomas se activan en CMS Admin (Manage websites → Languages).
+  - StartPage and StandardPage: **MetaTitle**, **MetaDescription**, **CanonicalUrl** properties (SEO tab).
+  - Layout: `<title>`, `<meta name="description">`, `<link rel="canonical">` from ViewData (page views set MetaTitle, MetaDescription, CanonicalUrl).
+- **404 and errors**
+  - **NotFoundPage** content type (Heading, Message).
+  - **StatusCodeController** at `/statuscode/{statusCode}`; for 404 it tries to load a CMS page of type NotFoundPage named "404" under StartPage; if none exists, uses the static view `Views/StatusCode/404.cshtml`.
+  - `UseStatusCodePagesWithReExecute("/statuscode/{0}")` in Startup.
+- **Search**
+  - Route **/search**, parameter **q**; simple search by title across all pages that are descendants of StartPage (recursive with IContentLoader).
+  - SearchController + view with form and results list; IUrlResolver for URLs.
+- **Localization**
+  - `[CultureSpecific]` on: MainHeading, Heading, MetaTitle, MetaDescription (StartPage and StandardPage); Heading and Message (NotFoundPage).
+  - Languages are enabled in CMS Admin (Manage websites → Languages).
+
+### Phase 5 — Observability and test hooks
+- **Health endpoint**
+  - **`/health`**: overall status (all checks). JSON response with `status`, `totalDuration`, `entries`. 200 if Healthy, 503 if Unhealthy.
+  - **`/health/ready`**: only checks with tag `ready` (readiness for orchestration). Includes **CmsReadinessHealthCheck**: verifies that the Start page is configured and loadable (Healthy/Degraded/Unhealthy).
+  - Response in JSON (HealthResponseWriter) for smoke tests and orchestrators.
+- **Structured logging**
+  - **Serilog** configured in `Program.cs` and `appsettings.json` / `appsettings.Development.json`.
+  - Enrichment: `FromLogContext`, `Application` property.
+  - In Development: level `Debug` for `OptiDemoCms`; in production, `Information`/`Warning` per configuration.
+- **Reproducibility and seed data**
+  - Documentation in **`Docs/Reproducibility.md`**: use of `/health` and `/health/ready` as test hooks, seed data options (export/import, script, DB copy), and recommendation to wait for `/health/ready` to return 200 before smoke tests.
+  - No automatic content seed; the Start page is created in the CMS on first run.
 
 ### Testing (integration tests)
-- **Proyecto:** `OptiDemoCms.Tests` (xUnit, FluentAssertions, Microsoft.AspNetCore.Mvc.Testing).
-- **Factory:** `OptiDemoCmsWebApplicationFactory` hereda de `WebApplicationFactory<Startup>`.
-- **Tests en HomePageIntegrationTests:**
-  - `/` devuelve 200 y HTML.
-  - La respuesta contiene: `data-testid="start-page"`, `data-testid="main-heading"`, `data-testid="main-content"`, `data-testid="site-header"`, `data-testid="site-footer"`, `data-testid="site-nav"` y el texto "Optimizely CMS is running".
-- **Ejecución:** `dotnet test OptiDemoCms.Tests/OptiDemoCms.Tests.csproj`  
-  **Importante:** cerrar cualquier `dotnet run` antes de ejecutar los tests (el ejecutable queda bloqueado).
-- La carpeta del proyecto de tests está excluida del proyecto principal (`OptiDemoCms.csproj`) para que sus `.cs` no se compilen en la web app.
+- **Project:** `OptiDemoCms.Tests` (xUnit, FluentAssertions, Microsoft.AspNetCore.Mvc.Testing).
+- **Factory:** `OptiDemoCmsWebApplicationFactory` inherits from `WebApplicationFactory<Startup>`.
+- **Tests in HomePageIntegrationTests:**
+  - `/` returns 200 and HTML.
+  - Response contains: `data-testid="start-page"`, `data-testid="main-heading"`, `data-testid="main-content"`, `data-testid="site-header"`, `data-testid="site-footer"`, `data-testid="site-nav"` and the text "Optimizely CMS is running".
+- **Tests in HealthEndpointIntegrationTests (smoke):**
+  - `/health` and `/health/ready` return 200 or 503 and `application/json`.
+  - Response body of `/health` contains the `status` property.
+- **Run tests:** `dotnet test OptiDemoCms.Tests/OptiDemoCms.Tests.csproj`  
+  **Important:** stop any running `dotnet run` before running tests (the executable is locked).
+- The test project folder is excluded from the main project (`OptiDemoCms.csproj`) so its `.cs` files are not compiled into the web app.
 
-### Elementos listos para más tests
-- **data-testid** en vistas: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
+### Ready for more tests
+- **data-testid** in views: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
 
 ---
 
-## Estructura del proyecto (resumen)
+## Project structure (summary)
 
 ```
 Optimizely/
 ├── Controllers/          StartPage, StandardPage, NotFoundPage, Search, StatusCode
 ├── Components/           HeroBlock, RichTextBlock, CTABlock
+├── Health/               CmsReadinessHealthCheck, HealthResponseWriter
 ├── Models/               StartPage, StandardPage, NotFoundPage
 ├── Models/Blokcs/        HeroBlock, RichTextBlock, CTABlock
 ├── Views/
@@ -82,32 +99,32 @@ Optimizely/
 │   ├── Search/           Index.cshtml
 │   ├── Shared/           _Layout.cshtml, Blocks/*.cshtml
 │   └── StatusCode/       404.cshtml
+├── Docs/                 Reproducibility.md
 ├── wwwroot/css/          site.css
-├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests
+├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
 ├── Program.cs, Startup.cs, OptiDemoCms.csproj
 └── README.md
 ```
 
 ---
 
-## Cómo ejecutar
+## How to run
 
 ### Windows
-- **Requisitos:** .NET SDK 8+, SQL Server 2016 Express LocalDB (o superior).
+- **Requirements:** .NET SDK 8+, SQL Server 2016 Express LocalDB (or later).
 - `dotnet run`
 
 ### Docker
-- **Requisitos:** Docker; revisar variables en `.env` si aplica.
+- **Requirements:** Docker; review variables in `.env` if applicable.
 - `docker-compose up`  
-- Solo desarrollo local; ver [guía HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md) si hace falta.
+- For local development only; see [HTTPS guide](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md) if needed.
 
-### Base de datos externa
-- **Requisitos:** .NET SDK 8+, SQL Server en servidor externo (p. ej. Azure SQL).
-- Crear base de datos vacía y actualizar la connection string; luego `dotnet run`.
+### External database
+- **Requirements:** .NET SDK 8+, SQL Server on an external server (e.g. Azure SQL).
+- Create an empty database and update the connection string; then `dotnet run`.
 
 ---
 
-## Próximos pasos sugeridos (roadmap original)
+## Suggested next steps
 
-- **Fase 5:** Observabilidad y “test hooks” (logging estructurado, health endpoint, seed data, más data-testid).
-- **Tests:** Afinar integration tests (StandardPage, /search, 404); unit tests (validación de modelos); opcional: Playwright para smoke E2E.
+- **Tests:** Refine integration tests (StandardPage, /search, 404); unit tests (model validation); optional: Playwright for E2E smoke tests.
