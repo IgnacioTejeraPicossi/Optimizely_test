@@ -1,0 +1,19 @@
+@model OptiDemoCms.Models.Blocks.CTABlock
+@using EPiServer.SpecializedProperties
+
+<div class="cta-block" data-testid="cta-block">
+    @if (!string.IsNullOrEmpty(Model.Heading))
+    {
+        <h2 data-testid="cta-heading">@Model.Heading</h2>
+    }
+    @if (!string.IsNullOrEmpty(Model.Text))
+    {
+        <p data-testid="cta-text">@Model.Text</p>
+    }
+    @{
+        var link = Model.Link?.FirstOrDefault();
+        var href = link?.Href ?? "#";
+        var label = !string.IsNullOrEmpty(Model.ButtonLabel) ? Model.ButtonLabel : (link?.Text ?? "Learn more");
+    }
+    <a href="@href" class="cta-button" data-testid="cta-button">@label</a>
+</div>

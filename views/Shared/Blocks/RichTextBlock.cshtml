@@ -1,0 +1,14 @@
+@model OptiDemoCms.Models.Blocks.RichTextBlock
+
+<div class="rich-text-block" data-testid="rich-text-block">
+    @if (!string.IsNullOrEmpty(Model.Heading))
+    {
+        <h2 data-testid="rich-text-heading">@Model.Heading</h2>
+    }
+    @if (Model.Body != null && !Model.Body.IsEmpty)
+    {
+        <div class="rich-text-body" data-testid="rich-text-body">
+            @Html.PropertyFor(x => x.Body)
+        </div>
+    }
+</div>

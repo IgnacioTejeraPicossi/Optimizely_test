@@ -1,0 +1,24 @@
+@model OptiDemoCms.Models.StandardPage
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.Heading ?? Model.Name;
+}
+
+<article class="standard-page" data-testid="standard-page">
+    <h1 data-testid="page-heading">@(Model.Heading ?? Model.Name)</h1>
+
+    @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
+    {
+        <div class="main-body" data-testid="main-body">
+            @Html.PropertyFor(x => x.MainBody)
+        </div>
+    }
+
+    @if (Model.MainContentArea != null)
+    {
+        <div class="main-content-area" data-testid="main-content-area">
+            @Html.PropertyFor(x => x.MainContentArea)
+        </div>
+    }
+</article>

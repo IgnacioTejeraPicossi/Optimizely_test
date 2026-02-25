@@ -1,0 +1,31 @@
+@model OptiDemoCms.Models.StartPage
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.MainHeading ?? Model.Name;
+}
+
+<div class="start-page" data-testid="start-page">
+    <h1 data-testid="main-heading">@(Model.MainHeading ?? Model.Name)</h1>
+    <p>Optimizely CMS is running.</p>
+
+    @if (Model.HeroArea != null)
+    {
+        <section class="hero-area" data-testid="hero-area">
+            @Html.PropertyFor(x => x.HeroArea)
+        </section>
+    }
+
+    @if (Model.TopContentArea != null)
+    {
+        <section class="top-content-area" data-testid="top-content-area">
+            @Html.PropertyFor(x => x.TopContentArea)
+        </section>
+    }
+
+    @if (Model.MainContentArea != null)
+    {
+        <section class="main-content-area" data-testid="main-content-area">
+            @Html.PropertyFor(x => x.MainContentArea)
+        </section>
+    }
+</div>

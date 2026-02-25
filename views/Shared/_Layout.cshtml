@@ -1,0 +1,55 @@
+@using EPiServer.Core
+@using EPiServer.Filters
+@using EPiServer.Web.Routing
+@inject IContentLoader ContentLoader
+@inject IContentRouteHelper ContentRouteHelper
+@{
+    var startPageRef = ContentReference.StartPage;
+    var filter = new FilterContentForVisitor();
+    var menuItems = startPageRef != null
+        ? ContentLoader.GetChildren<PageData>(startPageRef)
+            .Where(p => !filter.ShouldFilter(p) && p.VisibleInMenu)
+            .ToList()
+        : new List<PageData>();
+    var currentContent = ContentRouteHelper?.Content;
+    var currentLink = currentContent?.ContentLink;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@((string)(ViewData["Title"] ?? "Optimizely Demo"))</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header class="site-header" data-testid="site-header">
+        <nav class="site-nav" data-testid="site-nav">
+            @if (startPageRef != null)
+            {
+                var startPage = ContentLoader.Get<PageData>(startPageRef);
+                <a href="@Url.ContentUrl(startPageRef)" data-testid="nav-home">@(startPage?.Name ?? "Home")</a>
+            }
+            <ul>
+                @foreach (var page in menuItems)
+                {
+                    var isActive = currentLink != null && page.ContentLink.CompareToIgnoreWorkID(currentLink);
+                    <li class="@(isActive ? "active" : null)">
+                        <a href="@Url.ContentUrl(page.ContentLink)">@(page.Name)</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content" data-testid="main-content">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer" data-testid="site-footer">
+        <small>Optimizely Demo CMS — @DateTime.Now.Year</small>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
