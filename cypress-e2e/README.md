@@ -60,6 +60,7 @@ npx cypress run
 | `search.cy.js` | Search page: form, input, submit |
 | `not-found.cy.js` | 404 page: not-found structure, home link, navigation back |
 | `health.cy.js` | Health endpoints: `/health` and `/health/ready` return JSON with `status` |
+| `personal-pages.cy.js` | About Me, AI tools, My Hobbies, Contact Me: load, layout (header, sidebar), content, footer; home nav links to all four |
 
 Tests use `data-testid` attributes where available for stable selectors.
 
