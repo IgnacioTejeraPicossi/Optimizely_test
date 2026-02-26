@@ -84,8 +84,17 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 - **Prerequisites:** Node.js 18+, app running at `https://localhost:5000`.
 - **Setup:** `cd cypress-e2e && npm install`
 - **Run:** `npm run cy:open` (interactive) or `npm run cy:run` (headless).
-- **Specs:** `home.cy.js` (StartPage), `search.cy.js`, `not-found.cy.js`, `health.cy.js`; use `data-testid` selectors.
+- **Specs:** `home.cy.js` (StartPage), `search.cy.js`, `not-found.cy.js`, `health.cy.js`, `personal-pages.cy.js`; use `data-testid` selectors.
 - See **`cypress-e2e/README.md`** for details.
+
+### Playwright E2E (public + CMS UI)
+- **Project:** `tests-playwright/` (Node.js; Playwright, TypeScript).
+- **Prerequisites:** Node.js 18+, app running at `https://localhost:5000`.
+- **Setup:** `cd tests-playwright && npm install && npx playwright install chromium`
+- **Run:** `npm run test` (all), `npm run test:public` (public only), `npm run test:ui` (UI mode). CMS tests require running `npm run cms:login` first (set `CMS_USER` / `CMS_PASS`).
+- **Specs:** Public — `home.spec.ts`, `navigation.spec.ts`, `hero-block-render.spec.ts`, `home.visual.spec.ts`; CMS — `login.setup.ts`, `create-hero-block.spec.ts`, `add-block-to-home.spec.ts`, `publish-home.spec.ts` (scaffold; use codegen to complete).
+- Anti-flakiness: `test-utils/stabilize.ts` (animations off, networkidle), `ignoreHTTPSErrors`, deterministic waits.
+- See **`tests-playwright/README.md`** for details.
 
 ### Ready for more tests
 - **data-testid** in views: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
@@ -111,7 +120,8 @@ Optimizely/
 ├── Docs/                 Reproducibility.md
 ├── wwwroot/css/          site.css
 ├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
-├── cypress-e2e/          Cypress E2E tests (home, search, not-found, health)
+├── cypress-e2e/          Cypress E2E tests (home, search, not-found, health, personal-pages)
+├── tests-playwright/     Playwright E2E (public + CMS UI; stabilize, visual snapshots)
 ├── Program.cs, Startup.cs, OptiDemoCms.csproj
 └── README.md
 ```
