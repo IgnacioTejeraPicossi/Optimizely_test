@@ -1,8 +1,10 @@
+using System.Net.Http.Headers;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using OptiDemoCms.Api;
 
 namespace OptiDemoCms;
 
@@ -37,6 +39,20 @@ public class Startup
         {
             services.AddHostedService<Seed.PersonalPagesSeed>();
         }
+
+        services.AddHttpClient("Groq", (sp, client) =>
+        {
+            var key = sp.GetRequiredService<IConfiguration>()["Ai:GroqApiKey"];
+            if (!string.IsNullOrWhiteSpace(key))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
+        });
+        services.AddHttpClient("HuggingFace", (sp, client) =>
+        {
+            var token = sp.GetRequiredService<IConfiguration>()["Ai:HuggingFaceToken"];
+            if (!string.IsNullOrWhiteSpace(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        });
+        services.AddSingleton<AiDemoService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

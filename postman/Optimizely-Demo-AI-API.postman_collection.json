@@ -1,0 +1,60 @@
+{
+  "info": {
+    "name": "Optimizely Demo – AI API",
+    "description": "Demo AI endpoints for Postman: health, complete (Groq/Llama), summarize and sentiment (Hugging Face). Works in demo mode without API keys.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://localhost:5000" }
+  ],
+  "item": [
+    {
+      "name": "Get AI health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/ai/health",
+        "description": "Health and capability check. Shows demo vs live and which providers (Groq, Hugging Face) are configured."
+      }
+    },
+    {
+      "name": "Complete (Groq/Llama)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"In one sentence, why is software testing important?\"\n}"
+        },
+        "url": "{{baseUrl}}/api/ai/complete",
+        "description": "Chat completion. Uses Groq (Llama) when Ai:GroqApiKey is set; otherwise returns demo response."
+      }
+    },
+    {
+      "name": "Summarize (Hugging Face)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Optimizely CMS is a .NET-based content management system. It supports blocks, pages, and multi-site. Many enterprises use it for their websites and need solid testing and automation.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/ai/summarize",
+        "description": "Summarize text with Hugging Face BART. Demo mode when Ai:HuggingFaceToken is not set."
+      }
+    },
+    {
+      "name": "Sentiment (Hugging Face)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"This demo is really useful for learning APIs and AI integrations.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/ai/sentiment",
+        "description": "Sentiment analysis. Returns label and score. Demo mode when Hugging Face token is not set."
+      }
+    }
+  ]
+}

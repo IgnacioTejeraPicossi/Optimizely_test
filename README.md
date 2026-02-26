@@ -96,6 +96,11 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 - Anti-flakiness: `test-utils/stabilize.ts` (animations off, networkidle), `ignoreHTTPSErrors`, deterministic waits.
 - See **`tests-playwright/README.md`** for details.
 
+### AI Demo API (Postman)
+- **Endpoints:** `GET /api/ai/health`, `POST /api/ai/complete` (Groq/Llama), `POST /api/ai/summarize` and `POST /api/ai/sentiment` (Hugging Face).
+- **Demo mode:** All work without API keys (sample responses for Postman demos). Set **Ai:GroqApiKey** and/or **Ai:HuggingFaceToken** (or env `Ai__GroqApiKey`, `Ai__HuggingFaceToken`) for live AI.
+- **Postman:** Import **`postman/Optimizely-Demo-AI-API.postman_collection.json`** and set variable `baseUrl` to your app URL (e.g. `https://localhost:5000`). See **`Docs/Api-AI-Postman.md`** for details and API key setup (Groq, Hugging Face).
+
 ### Ready for more tests
 - **data-testid** in views: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
 
@@ -105,7 +110,8 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 
 ```
 Optimizely/
-├── Controllers/          StartPage, StandardPage, NotFoundPage, AboutMe, AITools, Hobbies, Contact, Search, StatusCode
+├── Api/                   AiDemoService (Groq, Hugging Face)
+├── Controllers/           StartPage, StandardPage, NotFoundPage, AboutMe, AITools, Hobbies, Contact, Search, StatusCode, AiApi
 ├── Components/           HeroBlock, RichTextBlock, CTABlock
 ├── Health/               CmsReadinessHealthCheck, HealthResponseWriter
 ├── Models/               StartPage, StandardPage, NotFoundPage
@@ -117,7 +123,8 @@ Optimizely/
 │   ├── Search/           Index.cshtml
 │   ├── Shared/           _Layout.cshtml, Blocks/*.cshtml
 │   └── StatusCode/       404.cshtml
-├── Docs/                 Reproducibility.md
+├── Docs/                 Reproducibility.md, Api-AI-Postman.md
+├── postman/              Optimizely-Demo-AI-API.postman_collection.json
 ├── wwwroot/css/          site.css
 ├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
 ├── cypress-e2e/          Cypress E2E tests (home, search, not-found, health, personal-pages)
