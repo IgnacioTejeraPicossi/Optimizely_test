@@ -47,10 +47,11 @@ npm run test:cms
 npm run test:ui
 ```
 
-**Update visual snapshots:**
+**Update visual snapshots (create or refresh baselines):**
 ```bash
 npm run snap:update
 ```
+Run this once when you add a new visual test, or when the baseline is missing (e.g. first run or new machine).
 
 **View last report:**
 ```bash
