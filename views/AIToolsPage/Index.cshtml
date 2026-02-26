@@ -1,0 +1,32 @@
+@model OptiDemoCms.Models.AIToolsPage
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewData["Title"] = Model.Heading ?? "AI Tools";
+}
+
+<div class="personal-page ai-tools-page" data-testid="ai-tools-page">
+    <div class="personal-banner">AI Tools</div>
+
+    <div class="personal-card">
+        @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
+        {
+            @Html.PropertyFor(x => x.MainBody)
+        }
+        else
+        {
+            <h2>AI I Enjoy using</h2>
+            <ol class="personal-list ai-tools-list">
+                <li>AI ChatGPT / OpenAI</li>
+                <li>ChatGPT Agent / Test Master</li>
+                <li>AI DeepSeek</li>
+                <li>Grok / X</li>
+                <li>Outlier Playground</li>
+                <li>VR Meta</li>
+                <li>Gemini 2.0 Flash</li>
+                <li>Perplexity</li>
+                <li>Qwen2.5</li>
+                <li>watsonx-ai</li>
+            </ol>
+        }
+    </div>
+</div>

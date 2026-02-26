@@ -1,0 +1,28 @@
+@model OptiDemoCms.Models.HobbiesPage
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewData["Title"] = Model.Heading ?? "My Hobbies";
+}
+
+<div class="personal-page hobbies-page" data-testid="hobbies-page">
+    <div class="personal-banner">My Hobbies</div>
+
+    <div class="personal-card">
+        @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
+        {
+            @Html.PropertyFor(x => x.MainBody)
+        }
+        else
+        {
+            <h2>Things I Enjoy Doing</h2>
+            <ol class="personal-list hobbies-list">
+                <li>Asian films</li>
+                <li>Reading Books and comics</li>
+                <li>Tennis and Padel</li>
+                <li>Mountain Biking</li>
+                <li>Golf</li>
+                <li>Golf Lommedalen</li>
+            </ol>
+        }
+    </div>
+</div>

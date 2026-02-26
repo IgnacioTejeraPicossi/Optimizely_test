@@ -32,6 +32,11 @@ public class Startup
 
         services.AddHealthChecks()
             .AddCheck<Health.CmsReadinessHealthCheck>("cms_readiness", tags: new[] { "ready" });
+
+        if (_webHostingEnvironment.IsDevelopment())
+        {
+            services.AddHostedService<Seed.PersonalPagesSeed>();
+        }
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

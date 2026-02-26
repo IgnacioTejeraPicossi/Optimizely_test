@@ -1,0 +1,21 @@
+@model OptiDemoCms.Models.ContactPage
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewData["Title"] = Model.Heading ?? "Contact Me";
+}
+
+<div class="personal-page contact-page" data-testid="contact-page">
+    <div class="personal-banner">Contact Me</div>
+
+    <div class="personal-card">
+        @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
+        {
+            @Html.PropertyFor(x => x.MainBody)
+        }
+        else
+        {
+            <h2>Get in touch</h2>
+            <p>You can reach me via LinkedIn or your preferred channel.</p>
+        }
+    </div>
+</div>

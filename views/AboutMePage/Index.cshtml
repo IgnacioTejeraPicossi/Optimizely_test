@@ -1,0 +1,61 @@
+@model OptiDemoCms.Models.AboutMePage
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewData["Title"] = Model.Heading ?? "About Me";
+}
+
+<div class="personal-page about-me-page" data-testid="about-me-page">
+    <div class="personal-profile-header">
+        <div class="name-banner">IGNACIO TEJERA PICOSSI</div>
+        <p><strong>Software Test Manager and Test Automation Engineer</strong></p>
+        <p><a href="https://www.itemconsulting.no/" target="_blank" rel="noopener">Item Consulting</a> (Automation Engineer).</p>
+        <p>I am a software test engineer.</p>
+    </div>
+
+    @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
+    {
+        <div class="personal-card">
+            @Html.PropertyFor(x => x.MainBody)
+        </div>
+    }
+
+    <div class="personal-card">
+        <h2>Test Certification</h2>
+        <ul>
+            <li>ISTQB Advanced Test Manager</li>
+            <li>ISTQB Advanced Level Test Automation Engineer
+                <ul>
+                    <li>ISTQB AI Testing</li>
+                </ul>
+            </li>
+            <li>ISTQB Foundation Software Tester sertifisert</li>
+        </ul>
+    </div>
+
+    <div class="personal-card">
+        <h2>Work Experience</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dates</th>
+                    <th>Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1991-2010</td><td>Lead Developer / Developer at Mikromarc</td></tr>
+                <tr><td>2010-2019</td><td>Test Manager / Tester at Bibits with product Mikromarc 3</td></tr>
+                <tr><td>2019-2023</td><td>Test Manager / Automatic Test Engineer at Axiell with product WeLib / Quria / Arena</td></tr>
+                <tr><td>2023-2025</td><td>Test Manager / Automatic Test Engineer at Item Consulting</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="personal-card">
+        <h2>Skills</h2>
+        <ul>
+            <li>Test Manager — *****</li>
+            <li>Automatic Test Engineer — ****</li>
+            <li>Programming experience in different languages: C#, Pascal, JavaScript. — ****</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+@using EPiServer.Core
+@using EPiServer.Filters
+@using EPiServer.Web.Routing
+@inject IContentLoader ContentLoader
+@inject IContentRouteHelper ContentRouteHelper
+@{
+    var startPageRef = ContentReference.StartPage;
+    var filter = new FilterContentForVisitor();
+    var children = startPageRef != null
+        ? ContentLoader.GetChildren<PageData>(startPageRef).Where(p => !filter.ShouldFilter(p)).ToList()
+        : new List<PageData>();
+    var aboutMe = children.OfType<OptiDemoCms.Models.AboutMePage>().FirstOrDefault();
+    var aiTools = children.OfType<OptiDemoCms.Models.AIToolsPage>().FirstOrDefault();
+    var hobbies = children.OfType<OptiDemoCms.Models.HobbiesPage>().FirstOrDefault();
+    var contact = children.OfType<OptiDemoCms.Models.ContactPage>().FirstOrDefault();
+    var currentContent = ContentRouteHelper?.Content;
+    var currentLink = currentContent?.ContentLink;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "Optimizely Demo")</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/personal.css" />
+</head>
+<body>
+    <header class="site-header" data-testid="site-header">
+        <nav class="site-nav" data-testid="site-nav">
+            @if (startPageRef != null)
+            {
+                var startPage = ContentLoader.Get<PageData>(startPageRef);
+                <a href="@Url.ContentUrl(startPageRef)" data-testid="nav-home">@(startPage?.Name ?? "Home")</a>
+            }
+            @if (aboutMe != null) { <a href="@Url.ContentUrl(aboutMe.ContentLink)">About Me</a> }
+            @if (aiTools != null) { <a href="@Url.ContentUrl(aiTools.ContentLink)">AI tools</a> }
+            @if (hobbies != null) { <a href="@Url.ContentUrl(hobbies.ContentLink)">My Hobbies</a> }
+            @if (contact != null) { <a href="@Url.ContentUrl(contact.ContentLink)">Contact Me</a> }
+            <a href="@Url.Action("Index", "Search")" data-testid="nav-search">Search</a>
+        </nav>
+    </header>
+
+    <div class="personal-layout" data-testid="personal-layout">
+        <aside class="personal-sidebar" data-testid="personal-sidebar">
+            <nav class="personal-nav">
+                <ul>
+                    @if (aboutMe != null)
+                    {
+                        var active = currentLink != null && aboutMe.ContentLink.CompareToIgnoreWorkID(currentLink);
+                        <li class="@(active ? "active" : null)"><a href="@Url.ContentUrl(aboutMe.ContentLink)">About Me</a></li>
+                    }
+                    @if (aiTools != null)
+                    {
+                        var active = currentLink != null && aiTools.ContentLink.CompareToIgnoreWorkID(currentLink);
+                        <li class="@(active ? "active" : null)"><a href="@Url.ContentUrl(aiTools.ContentLink)">AI tools</a></li>
+                    }
+                    @if (hobbies != null)
+                    {
+                        var active = currentLink != null && hobbies.ContentLink.CompareToIgnoreWorkID(currentLink);
+                        <li class="@(active ? "active" : null)"><a href="@Url.ContentUrl(hobbies.ContentLink)">My Hobbies</a></li>
+                    }
+                    @if (contact != null)
+                    {
+                        var active = currentLink != null && contact.ContentLink.CompareToIgnoreWorkID(currentLink);
+                        <li class="@(active ? "active" : null)"><a href="@Url.ContentUrl(contact.ContentLink)">Contact Me</a></li>
+                    }
+                </ul>
+            </nav>
+        </aside>
+        <main class="personal-main" data-testid="main-content">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="site-footer" data-testid="site-footer">
+        <small>Optimizely Demo CMS — @DateTime.Now.Year</small>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

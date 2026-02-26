@@ -22,6 +22,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
   - **RichTextBlock:** Heading, Body (XhtmlString).
   - **CTABlock:** Heading, Text, Link (LinkItemCollection), ButtonLabel.
 - **Controllers and views:** StartPageController, StandardPageController, NotFoundPageController; views in `Views/StartPage`, `Views/StandardPage`, `Views/NotFoundPage`. Blocks rendered via components (`HeroBlockComponent`, `RichTextBlockComponent`, `CTABlockComponent`) and views in `Views/Shared/Blocks`.
+- **Personal pages (menu: About Me, AI tools, My Hobbies, Contact Me):** **AboutMePage**, **AIToolsPage**, **HobbiesPage**, **ContactPage** with sidebar layout (`_PersonalLayout.cshtml`, `wwwroot/css/personal.css`). Pre-filled content: profile (certifications, work experience, skills), AI tools list, hobbies list. Create one page of each type under StartPage in CMS to show them in the top nav and in the sidebar on those pages.
 
 ### Phase 2 — Layout and navigation
 - **Layout:** `Views/Shared/_Layout.cshtml` with header, nav, main, footer; `_ViewStart.cshtml` applies the default layout.
@@ -95,7 +96,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 
 ```
 Optimizely/
-├── Controllers/          StartPage, StandardPage, NotFoundPage, Search, StatusCode
+├── Controllers/          StartPage, StandardPage, NotFoundPage, AboutMe, AITools, Hobbies, Contact, Search, StatusCode
 ├── Components/           HeroBlock, RichTextBlock, CTABlock
 ├── Health/               CmsReadinessHealthCheck, HealthResponseWriter
 ├── Models/               StartPage, StandardPage, NotFoundPage
