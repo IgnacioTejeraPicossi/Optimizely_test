@@ -1,6 +1,6 @@
 # Optimizely Demo CMS
 
-Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing (unit, integration, E2E). Based on a phased roadmap (0–5) implemented to date.
+Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing (unit, integration, E2E, Accessibility and APIs). Based on a phased roadmap (0–5) implemented to date.
 
 ---
 
