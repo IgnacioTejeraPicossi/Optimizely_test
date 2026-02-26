@@ -138,3 +138,11 @@ Optimizely/
 ## Suggested next steps
 
 - **Tests:** Refine integration tests (StandardPage, /search, 404); unit tests (model validation); optional: Playwright for E2E smoke tests.
+
+---
+
+## Accessibility (WAVE)
+
+First accessibility check with [WAVE](https://wave.webaim.org/) (WebAIM) on the home page: no errors, no contrast errors, no alerts. Manual testing is still recommended for full compliance.
+
+![WAVE accessibility evaluation on Optimizely Demo CMS home page — no errors detected](Docs/screenshots/wave-accessibility-home.png)
