@@ -6,6 +6,10 @@ UI (browser) tests using [Cypress](https://www.cypress.io/). The app must be run
 
 The screenshots below show the Optimizely Demo CMS home page (“Hello Optimizely”, with a reusable block “Welcome Ignacio”) and the Cypress test runner with all tests passing.
 
+**Expanded test coverage – 17 tests (including personal pages)**
+
+![Cypress test runner – personal-pages.cy.js and full suite, 17 tests passing](docs/screenshots/cypress-personal-pages-tests.png)
+
 **Home page (StartPage) in the browser**
 
 ![Optimizely home page – Hello Optimizely, Welcome Ignacio, first reusable block](docs/screenshots/optimizely-home-page.png)
