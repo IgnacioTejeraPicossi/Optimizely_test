@@ -101,6 +101,10 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 - **Demo mode:** All work without API keys (sample responses for Postman demos). Set **Ai:GroqApiKey** and/or **Ai:HuggingFaceToken** (or env `Ai__GroqApiKey`, `Ai__HuggingFaceToken`) for live AI.
 - **Postman:** Import **`postman/Optimizely-Demo-AI-API.postman_collection.json`** and set variable `baseUrl` to your app URL (e.g. `https://localhost:5000`). See **`Docs/Api-AI-Postman.md`** for details and API key setup (Groq, Hugging Face).
 
+**API tests in Postman – AI health (200 OK, demo mode)**
+
+![Postman – Optimizely Demo AI API collection, Get AI health 200 OK, status, mode, providers, endpoints](Docs/screenshots/postman-ai-api-health.png)
+
 ### Ready for more tests
 - **data-testid** in views: start-page, main-heading, hero-area, main-content-area, site-header, site-nav, site-footer, standard-page, page-heading, main-body, rich-text-block, cta-block, cta-button, search-page, search-form, search-input, search-submit, search-results, not-found-page, not-found-heading, not-found-home-link, etc.
 
