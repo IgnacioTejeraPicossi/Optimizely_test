@@ -124,6 +124,13 @@
     border-bottom: none;
 }
 
+.hobby-item .hobby-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
     .personal-layout {
         flex-direction: column;
