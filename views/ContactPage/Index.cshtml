@@ -2,20 +2,51 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewData["Title"] = Model.Heading ?? "Contact Me";
+    var messageSent = TempData["ContactMessageSent"] as bool? == true;
 }
 
 <div class="personal-page contact-page" data-testid="contact-page">
-    <div class="personal-banner">Contact Me</div>
+    <div class="personal-banner">Contact Details</div>
 
-    <div class="personal-card">
+    <div class="personal-card contact-card">
         @if (Model.MainBody != null && !Model.MainBody.IsEmpty)
         {
             @Html.PropertyFor(x => x.MainBody)
         }
         else
         {
-            <h2>Get in touch</h2>
-            <p>You can reach me via LinkedIn or your preferred channel.</p>
+            <div class="contact-info">
+                <p class="contact-label"><strong>My Address</strong></p>
+                <p><strong>Phone:</strong> 41428685</p>
+                <p><strong>Email:</strong> <a href="mailto:ignacio.tejera@outlook.com">ignacio.tejera@outlook.com</a></p>
+            </div>
+
+            <hr class="contact-separator" />
+
+            @if (messageSent)
+            {
+                <p class="contact-success">Thank you. Your message has been sent.</p>
+            }
+            else
+            {
+                <form method="post" asp-action="SendMessage" asp-controller="Contact" class="contact-form">
+                    <div class="contact-field">
+                        <label for="senderName"><strong>Your Name:</strong></label>
+                        <input type="text" id="senderName" name="senderName" placeholder="Enter your name" class="contact-input" />
+                    </div>
+                    <div class="contact-field">
+                        <label for="senderEmail"><strong>Your Email:</strong></label>
+                        <input type="email" id="senderEmail" name="senderEmail" placeholder="Enter your email" class="contact-input" />
+                    </div>
+                    <div class="contact-field">
+                        <label for="message"><strong>Your Message:</strong></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Write your message here..." class="contact-textarea"></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit">Send Message</button>
+                </form>
+            }
         }
     </div>
+
+    <p class="contact-footer">Designed by Ignacio Tejera. For more information, visit <a href="https://www.itemconsulting.no/" target="_blank" rel="noopener">Item Consulting</a>.</p>
 </div>
