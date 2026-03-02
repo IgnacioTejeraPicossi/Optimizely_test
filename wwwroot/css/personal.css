@@ -131,6 +131,13 @@
     flex-shrink: 0;
 }
 
+.ai-tool-item .ai-tool-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
     .personal-layout {
         flex-direction: column;
