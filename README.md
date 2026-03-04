@@ -83,7 +83,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 - **Project:** `cypress-e2e/` (Node.js; Cypress 13).
 - **Prerequisites:** Node.js 18+, app running at `https://localhost:5000`.
 - **Setup:** `cd cypress-e2e && npm install`
-- **Run:** `npm run cy:open` (interactive) or `npm run cy:run` (headless).
+- **Run:** From the `cypress-e2e` folder run `npm run cy:open` (interactive) or `npm run cy:run` (headless).
 - **Specs:** `home.cy.js` (StartPage), `search.cy.js`, `not-found.cy.js`, `health.cy.js`, `personal-pages.cy.js`; use `data-testid` selectors.
 - See **`cypress-e2e/README.md`** for details.
 

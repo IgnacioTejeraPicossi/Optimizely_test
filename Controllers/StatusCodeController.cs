@@ -24,6 +24,7 @@ namespace OptiDemoCms.Controllers
         public IActionResult Index(int statusCode)
         {
             Response.StatusCode = statusCode;
+            Response.ContentType = "text/html; charset=utf-8";
 
             if (statusCode == 404)
             {
