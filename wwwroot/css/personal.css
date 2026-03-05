@@ -131,11 +131,29 @@
     flex-shrink: 0;
 }
 
+.hobby-item a {
+    color: var(--color-primary, #0d47a1);
+    font-weight: 600;
+    text-decoration: none;
+}
+.hobby-item a:hover {
+    text-decoration: underline;
+}
+
 .ai-tool-item .ai-tool-icon {
     width: 32px;
     height: 32px;
     object-fit: contain;
     flex-shrink: 0;
+}
+
+.ai-tool-item a {
+    color: var(--color-primary, #0d47a1);
+    font-weight: 600;
+    text-decoration: none;
+}
+.ai-tool-item a:hover {
+    text-decoration: underline;
 }
 
 /* Contact Me: details + form */
