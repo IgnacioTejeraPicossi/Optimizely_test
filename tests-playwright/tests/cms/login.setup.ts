@@ -16,7 +16,8 @@ test("CMS login - save storageState", async ({ page }) => {
   await page.getByLabel("Password").fill(process.env.CMS_PASS || "Password123!");
   await page.getByRole("button", { name: /log in|sign in/i }).click();
 
-  await page.waitForURL(/episerver\/cms/i, { timeout: 15_000 });
+  // Wait until we are past the login form (login button disappears = form submitted)
+  await page.getByRole("button", { name: /log in|sign in/i }).waitFor({ state: "hidden", timeout: 15_000 });
 
   await fs.promises.mkdir("storage", { recursive: true });
   await page.context().storageState({ path: "storage/auth.json" });

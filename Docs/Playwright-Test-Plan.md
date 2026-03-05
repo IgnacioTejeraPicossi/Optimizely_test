@@ -125,11 +125,14 @@ Solo si quieres ejecutar los tests que tocan la UI del CMS:
     npm run cms:login
     ```
     - Se ejecuta el test de login y se guarda el estado en `storage/auth.json`.
+    - **Importante:** Usa el usuario y contraseña reales del CMS. Si el login falla, se guarda igual la sesión y el test "CMS loads after login" fallará después.
 14. Luego puedes correr los tests de CMS:
     ```powershell
     npm run test:cms
     ```
     - Los specs en `tests/cms/` que usan `storage/auth.json` podrán ejecutarse (algunos están en scaffold y pueden estar en `test.skip`).
+
+**Si "CMS loads after login" falla:** El test espera ver en la página texto como "Content", "Admin", "Edit", "Optimizely" o "CMS" tras cargar con la sesión guardada. Comprueba que (1) el usuario/contraseña son correctos y (2) al abrir `https://localhost:5000/episerver/cms` en el navegador con la app en marcha ves ese tipo de texto tras iniciar sesión. Para inspeccionar qué hay realmente en la página, ejecuta `npm run test:ui`, corre solo el test que falla y revisa el trace o la captura de pantalla del fallo.
 
 ---
 
