@@ -11,6 +11,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising **testin
 | [Docs/AGENTS.md](Docs/AGENTS.md) | Guidance for AI agents and assistants working on this repo. |
 | [Docs/llms.txt](Docs/llms.txt) | Project context for LLMs (tech stack, structure, conventions). |
 | [Docs/TESTING.md](Docs/TESTING.md) | Testing strategy: integration, Cypress, Playwright, Postman. |
+| [Docs/Playwright-Test-Plan.md](Docs/Playwright-Test-Plan.md) | Step-by-step plan to run Playwright tests (Cypress-style guide). |
 | [Docs/Api-AI-Postman.md](Docs/Api-AI-Postman.md) | AI Demo API and Postman collection (health, complete, summarize, sentiment). |
 | [Docs/Reproducibility.md](Docs/Reproducibility.md) | Reproducibility, health hooks, seed data options. |
 
