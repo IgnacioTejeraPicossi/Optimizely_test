@@ -4,6 +4,20 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising **testin
 
 ---
 
+## Docs
+
+| Document | Description |
+|----------|-------------|
+| [Docs/AGENTS.md](Docs/AGENTS.md) | Guidance for AI agents and assistants working on this repo. |
+| [Docs/llms.txt](Docs/llms.txt) | Project context for LLMs (tech stack, structure, conventions). |
+| [Docs/TESTING.md](Docs/TESTING.md) | Testing strategy: integration, Cypress, Playwright, Postman. |
+| [Docs/Api-AI-Postman.md](Docs/Api-AI-Postman.md) | AI Demo API and Postman collection (health, complete, summarize, sentiment). |
+| [Docs/Reproducibility.md](Docs/Reproducibility.md) | Reproducibility, health hooks, seed data options. |
+
+*(Tooling that looks for `llms.txt` in the repo root can use [llms.txt](llms.txt), which points to [Docs/llms.txt](Docs/llms.txt).)*
+
+---
+
 ## Current status: phases 0–5 completed
 
 ### Phase 0 — Baseline
@@ -142,7 +156,8 @@ Optimizely/
 ├── cypress-e2e/           Cypress E2E (home, search, not-found, health, personal-pages); run from cypress-e2e folder
 ├── tests-playwright/      Playwright E2E (public + CMS UI; stabilize, visual snapshots); run from tests-playwright folder
 ├── Program.cs, Startup.cs, OptiDemoCms.csproj
-└── README.md
+├── README.md
+└── llms.txt                 → points to Docs/llms.txt (for tooling that expects it in root)
 ```
 
 ---

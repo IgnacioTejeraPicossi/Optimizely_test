@@ -1,0 +1,7 @@
+# Optimizely Demo CMS — LLM context
+
+Project context for this repo is in:
+
+  Docs/llms.txt
+
+See that file for tech stack, structure, conventions, and testing.

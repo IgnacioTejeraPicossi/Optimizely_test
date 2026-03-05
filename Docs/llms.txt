@@ -1,0 +1,79 @@
+# llms.txt — OptiDemoCms (LLM Orientation)
+
+You are operating inside the **OptiDemoCms** repository.
+
+## What this project is
+A demo site on **Optimizely CMS 12 / ASP.NET Core / .NET 8** focused on learning and practicing:
+- Testing: integration tests (xUnit), E2E tests (Cypress, Playwright), API tests (Postman)
+- Accessibility checks (WAVE)
+- AI demo API integrations (Groq + Hugging Face), with demo mode responses
+
+## Entry points
+- `Program.cs`: host bootstrapping + Serilog
+- `Startup.cs`: services + middleware + routing + status code re-execute
+
+Local URL (typical): `https://localhost:5000` (see `Properties/launchSettings.json`)
+
+## Core feature map (where to look)
+### Content types (Optimizely)
+- Pages: `Models/Pages/**`
+- Blocks: `Models/Blokcs/**`  (NOTE: folder name is `Blokcs` in this repo)
+
+### Rendering
+- Page views: `Views/**/Index.cshtml`
+- Shared layouts: `Views/Shared/_Layout.cshtml`, `Views/Shared/_PersonalLayout.cshtml`
+- Block views: `Views/Shared/Blocks/*.cshtml`
+
+### Controllers & routes
+- `Controllers/StartPageController.cs`, `StandardPageController.cs`, etc.
+- Search: `Controllers/SearchController.cs` + `Views/Search/Index.cshtml`
+- 404/status codes: `Controllers/StatusCodeController.cs` + `Views/StatusCode/404.cshtml`
+- Seed: `Controllers/SeedController.cs` and `Seed/**`
+- AI API: `Controllers/AiApiController.cs` (or similarly named API controller)
+
+### Observability / test hooks
+- Health: `Health/**` provides `/health` and `/health/ready`
+- Logging: Serilog config in `appsettings*.json` + program startup
+
+## Routes you can rely on
+Public:
+- `/` (StartPage)
+- `/search?q=...`
+- `/health`, `/health/ready`
+- `/about-me/`, `/ai-tools/`, `/my-hobbies/`, `/contact-me/`
+
+Dev-only:
+- `/seed/personal-pages` (create personal pages under StartPage)
+
+AI demo API:
+- `GET /api/ai/health`
+- `POST /api/ai/complete`
+- `POST /api/ai/summarize`
+- `POST /api/ai/sentiment`
+
+## Testing stack
+- Integration tests: `OptiDemoCms.Tests` (xUnit + WebApplicationFactory)
+- Cypress E2E: `cypress-e2e/` (Node, Cypress)
+- Playwright E2E: `tests-playwright/` (Node, TS; public + CMS UI scaffolds)
+- Postman collection: `postman/Optimizely-Demo-AI-API.postman_collection.json`
+
+Prefer stable selectors:
+- Use `data-testid` in views for Cypress/Playwright.
+
+## Configuration and secrets (never commit secrets)
+AI keys must come from:
+- `Ai:GroqApiKey`, `Ai:HuggingFaceToken`
+or environment:
+- `Ai__GroqApiKey`, `Ai__HuggingFaceToken`
+
+Demo mode works without keys; preserve that.
+
+## Constraints / rules for changes
+- Keep changes small and reviewable.
+- If you modify UI behavior or page rendering, update at least one automated test.
+- Do not redesign project structure unless explicitly asked.
+- Maintain Windows-friendly local dev (LocalDB/SQL Server).
+- Never remove or weaken `/health` and `/health/ready` semantics.
+
+## How to validate work
+Follow `TESTING.md` for exact commands and anti-flake rules.
