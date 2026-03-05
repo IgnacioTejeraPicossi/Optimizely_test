@@ -1,6 +1,6 @@
 # Optimizely Demo CMS
 
-Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing (unit, integration, E2E, Accessibility and APIs). Based on a phased roadmap (0–5) implemented to date.
+Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising **testing** (unit, integration, E2E, API tests with Postman), **accessibility** (WAVE), and **AI API** integration (Groq, Hugging Face). Based on a phased roadmap (0–5) implemented to date. Includes personal pages (About Me, AI tools, My Hobbies, Contact Me) with sidebar layout, icons, contact form, seed for content, Cypress and Playwright E2E, and a Postman collection for the AI API.
 
 ---
 
@@ -22,7 +22,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
   - **RichTextBlock:** Heading, Body (XhtmlString).
   - **CTABlock:** Heading, Text, Link (LinkItemCollection), ButtonLabel.
 - **Controllers and views:** StartPageController, StandardPageController, NotFoundPageController; views in `Views/StartPage`, `Views/StandardPage`, `Views/NotFoundPage`. Blocks rendered via components (`HeroBlockComponent`, `RichTextBlockComponent`, `CTABlockComponent`) and views in `Views/Shared/Blocks`.
-- **Personal pages (menu: About Me, AI tools, My Hobbies, Contact Me):** **AboutMePage**, **AIToolsPage**, **HobbiesPage**, **ContactPage** with sidebar layout (`_PersonalLayout.cshtml`, `wwwroot/css/personal.css`). Pre-filled content: profile (certifications, work experience, skills), AI tools list, hobbies list. Create one page of each type under StartPage in CMS to show them in the top nav and in the sidebar on those pages.
+- **Personal pages (menu: About Me, AI tools, My Hobbies, Contact Me):** **AboutMePage**, **AIToolsPage**, **HobbiesPage**, **ContactPage** with sidebar layout (`_PersonalLayout.cshtml`, `wwwroot/css/personal.css`). Pre-filled content: profile (certifications, work experience, skills), AI tools list with icons (`wwwroot/images/ai-tools/`), hobbies list with icons (`wwwroot/images/hobbies/`). **Contact Me** includes contact details (phone, email), a contact form (name, email, message, “Send Message”), POST to `/contact/send` (thank-you message), and footer “Designed by Ignacio Tejera, Item Consulting.” **Seed:** In Development, visit `/seed/personal-pages` once to create the four personal pages under the Start Page if they don’t exist; or use **SeedController** + **PersonalPagesSeed** (IHostedService) which runs after a short delay at startup.
 
 ### Phase 2 — Layout and navigation
 - **Layout:** `Views/Shared/_Layout.cshtml` with header, nav, main, footer; `_ViewStart.cshtml` applies the default layout.
@@ -44,8 +44,8 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
   - Layout: `<title>`, `<meta name="description">`, `<link rel="canonical">` from ViewData (page views set MetaTitle, MetaDescription, CanonicalUrl).
 - **404 and errors**
   - **NotFoundPage** content type (Heading, Message).
-  - **StatusCodeController** at `/statuscode/{statusCode}`; for 404 it tries to load a CMS page of type NotFoundPage named "404" under StartPage; if none exists, uses the static view `Views/StatusCode/404.cshtml`.
-  - `UseStatusCodePagesWithReExecute("/statuscode/{0}")` in Startup.
+  - **StatusCodeController** at `/statuscode/{statusCode}`; for 404 it tries to load a CMS page of type NotFoundPage named "404" under StartPage; if none exists, uses the static view `Views/StatusCode/404.cshtml`. Response sets `Content-Type: text/html; charset=utf-8` for E2E (e.g. Cypress).
+  - `UseStatusCodePagesWithReExecute("/statuscode/{0}")` in Startup (placed before UseRouting so re-execute works correctly).
 - **Search**
   - Route **/search**, parameter **q**; simple search by title across all pages that are descendants of StartPage (recursive with IContentLoader).
   - SearchController + view with form and results list; IUrlResolver for URLs.
@@ -64,7 +64,7 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
   - In Development: level `Debug` for `OptiDemoCms`; in production, `Information`/`Warning` per configuration.
 - **Reproducibility and seed data**
   - Documentation in **`Docs/Reproducibility.md`**: use of `/health` and `/health/ready` as test hooks, seed data options (export/import, script, DB copy), and recommendation to wait for `/health/ready` to return 200 before smoke tests.
-  - No automatic content seed; the Start page is created in the CMS on first run.
+  - Start page is created in the CMS on first run. Personal pages (About Me, AI tools, My Hobbies, Contact Me) can be auto-created in Development via **PersonalPagesSeed** or manually via **`/seed/personal-pages`**.
 
 ### Testing (integration tests)
 - **Project:** `OptiDemoCms.Tests` (xUnit, FluentAssertions, Microsoft.AspNetCore.Mvc.Testing).
@@ -115,24 +115,32 @@ Demo site on **Optimizely CMS 12 / .NET 8** for learning and practising testing 
 ```
 Optimizely/
 ├── Api/                   AiDemoService (Groq, Hugging Face)
-├── Controllers/           StartPage, StandardPage, NotFoundPage, AboutMe, AITools, Hobbies, Contact, Search, StatusCode, AiApi
-├── Components/           HeroBlock, RichTextBlock, CTABlock
-├── Health/               CmsReadinessHealthCheck, HealthResponseWriter
-├── Models/               StartPage, StandardPage, NotFoundPage
-├── Models/Blokcs/        HeroBlock, RichTextBlock, CTABlock
+├── Controllers/           StartPage, StandardPage, NotFoundPage, AboutMe, AITools, Hobbies, Contact, ContactPage, Search, StatusCode, Seed, AiApi
+├── Components/            HeroBlock, RichTextBlock, CTABlock
+├── Health/                CmsReadinessHealthCheck, HealthResponseWriter
+├── Models/                StartPage, StandardPage, NotFoundPage, AboutMePage, AIToolsPage, HobbiesPage, ContactPage
+├── Models/Blokcs/         HeroBlock, RichTextBlock, CTABlock
+├── Seed/                  PersonalPagesSeed (IHostedService); creates About Me, AI tools, My Hobbies, Contact Me under Start Page
 ├── Views/
-│   ├── StartPage/        Index.cshtml
-│   ├── StandardPage/     Index.cshtml
-│   ├── NotFoundPage/     Index.cshtml
-│   ├── Search/           Index.cshtml
-│   ├── Shared/           _Layout.cshtml, Blocks/*.cshtml
-│   └── StatusCode/       404.cshtml
-├── Docs/                 Reproducibility.md, Api-AI-Postman.md
-├── postman/              Optimizely-Demo-AI-API.postman_collection.json
-├── wwwroot/css/          site.css
-├── OptiDemoCms.Tests/    WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
-├── cypress-e2e/          Cypress E2E tests (home, search, not-found, health, personal-pages)
-├── tests-playwright/     Playwright E2E (public + CMS UI; stabilize, visual snapshots)
+│   ├── StartPage/         Index.cshtml
+│   ├── StandardPage/      Index.cshtml
+│   ├── NotFoundPage/      Index.cshtml
+│   ├── AboutMePage/       Index.cshtml
+│   ├── AIToolsPage/       Index.cshtml (list + icons from wwwroot/images/ai-tools/)
+│   ├── HobbiesPage/       Index.cshtml (list + icons from wwwroot/images/hobbies/)
+│   ├── ContactPage/       Index.cshtml (contact details, form, footer)
+│   ├── Search/            Index.cshtml
+│   ├── Shared/            _Layout.cshtml, _PersonalLayout.cshtml, Blocks/*.cshtml
+│   └── StatusCode/        404.cshtml
+├── Docs/                  Reproducibility.md, Api-AI-Postman.md
+├── Docs/screenshots/      wave-accessibility-home.png, postman-ai-api-health.png
+├── postman/               Optimizely-Demo-AI-API.postman_collection.json (GET /api/ai/health, POST complete, summarize, sentiment)
+├── wwwroot/
+│   ├── css/               site.css, personal.css
+│   └── images/            ai-tools/ (icons per tool), hobbies/ (icons per hobby)
+├── OptiDemoCms.Tests/      WebApplicationFactory, HomePageIntegrationTests, HealthEndpointIntegrationTests
+├── cypress-e2e/           Cypress E2E (home, search, not-found, health, personal-pages); run from cypress-e2e folder
+├── tests-playwright/      Playwright E2E (public + CMS UI; stabilize, visual snapshots); run from tests-playwright folder
 ├── Program.cs, Startup.cs, OptiDemoCms.csproj
 └── README.md
 ```
@@ -158,7 +166,8 @@ Optimizely/
 
 ## Suggested next steps
 
-- **Tests:** Refine integration tests (StandardPage, /search, 404); unit tests (model validation); optional: Playwright for E2E smoke tests.
+- **Tests:** Refine integration tests (StandardPage, /search, 404); unit tests (model validation); extend Playwright CMS tests with codegen.
+- **Contact form:** Optional: wire `/contact/send` to real email (e.g. IEmailSender).
 
 ---
 
@@ -167,3 +176,23 @@ Optimizely/
 First accessibility check with [WAVE](https://wave.webaim.org/) (WebAIM) on the home page: no errors, no contrast errors, no alerts. Manual testing is still recommended for full compliance.
 
 ![WAVE accessibility evaluation on Optimizely Demo CMS home page — no errors detected](Docs/screenshots/wave-accessibility-home.png)
+
+---
+
+## Summary for agents and LLMs (AGENTS.md / llms.txt / testing.md)
+
+This section gives a compact overview for generating or maintaining project docs (e.g. AGENTS.md, llms.txt, testing.md).
+
+**Tech stack:** Optimizely CMS 12, ASP.NET Core / .NET 8, C#, Razor views, SQL Server (LocalDB by default), Serilog, EPiServer namespaces for content (IContentLoader, IContentRepository, ContentReference, PageData, etc.).
+
+**Entry points:** `Program.cs` (host, Serilog), `Startup.cs` (ConfigureServices, Configure with middleware and MapControllers + MapContent). Main app URL: `https://localhost:5000` (see `Properties/launchSettings.json`).
+
+**Public routes:** `/` (StartPage), `/search`, `/contact-me/`, `/about-me/`, `/ai-tools/`, `/my-hobbies/`, `/health`, `/health/ready`, `/seed/personal-pages` (Development), `/api/ai/health`, `/api/ai/complete`, `/api/ai/summarize`, `/api/ai/sentiment`, `/contact/send` (POST). 404 handled via `UseStatusCodePagesWithReExecute` and `StatusCodeController` with `Content-Type: text/html`.
+
+**Testing strategy:**
+- **Integration (xUnit):** `OptiDemoCms.Tests` with `WebApplicationFactory<Startup>`. Tests hit `/`, `/health`, `/health/ready` and assert status, content-type, and `data-testid` / JSON. Stop `dotnet run` before `dotnet test`.
+- **Cypress E2E:** `cypress-e2e/` (Node, Cypress 13). Specs: home, search, not-found, health, personal-pages. Run from **inside** `cypress-e2e` (`npm run cy:open` or `npm run cy:run`). Base URL `https://localhost:5000`; `data-testid` used for selectors.
+- **Playwright E2E:** `tests-playwright/` (Node, TypeScript). Public specs: home, navigation, hero-block-render, home.visual (snapshots). CMS specs (login.setup, create-hero-block, etc.) are scaffold; use codegen to complete. Run from **inside** `tests-playwright`; base URL `https://localhost:5000`.
+- **API (Postman):** Collection in `postman/Optimizely-Demo-AI-API.postman_collection.json`. Tests can be added in the request Scripts (Tests) tab; results appear under the response “Test Results” tab.
+
+**Conventions:** Prefer `data-testid` in views for stable E2E selectors. API keys for AI (Groq, Hugging Face) via `Ai:GroqApiKey`, `Ai:HuggingFaceToken` or env `Ai__*`. Personal pages created under Start Page (seed or manually in CMS).
